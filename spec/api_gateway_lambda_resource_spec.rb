@@ -35,15 +35,5 @@ describe 'API Gateway lambda resource' do
 
   end
 
-  context 'api gateway stage' do
-
-    let(:stage_name) {vars.api_gateway_stage_name}
-
-    subject {api_gateway_stages(rest_api_id).item.first}
-
-    its(:stage_name) {should eq stage_name}
-
-  end
-
 
 end

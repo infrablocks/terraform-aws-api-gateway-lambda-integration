@@ -20,8 +20,6 @@ variable "lambda_subnet_ids" {
 
 variable "api_gateway_id" {}
 
-variable "api_gateway_stage_name" {}
-
 variable "api_gateway_root_resource_id" {}
 
 variable "resource_path_part" {}

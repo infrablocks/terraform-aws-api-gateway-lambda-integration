@@ -19,4 +19,3 @@ variable "lambda_environment_variables" {
 variable "lambda_function_name" {}
 variable "lambda_handler" {}
 
-variable "api_gateway_stage_name" {}

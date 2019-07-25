@@ -17,7 +17,6 @@ module "api_gateway_lambda_resource" {
   vpc_id = "${data.terraform_remote_state.prerequisites.outputs.vpc_id}"
   api_gateway_id = "${data.terraform_remote_state.prerequisites.outputs.api_gateway_id}"
   api_gateway_root_resource_id = "${data.terraform_remote_state.prerequisites.outputs.api_gateway_root_resource_id}"
-  api_gateway_stage_name = "${var.api_gateway_stage_name}"
 
   resource_path_part = "${var.resource_path_part}"
   lambda_subnet_ids = "${split(",",data.terraform_remote_state.prerequisites.outputs.private_subnet_ids)}"

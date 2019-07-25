@@ -62,7 +62,6 @@ module "api_gateway_lambda_resource" {
 | vpc_id|VPC to deploy lambda to                                           |- | yes |
 | api_gateway_id|api gateway id to create the resource for                                           |- | yes |
 | api_gateway_root_resource_id|root resource  of the api Gateway                                          |- | yes |
-| api_gateway_stage_name| API gateway deployment stage name to deploy after creation of the resource |- | yes |
 | resource_path_part| path to use for API gateway resource |- | yes |
 | lambda_subnet_ids| subnet ids for the lambda |- | yes |
 | lambda_zip_path| location of your lambda zip archive |- | yes |
@@ -78,9 +77,6 @@ module "api_gateway_lambda_resource" {
 
 | Name                                    | Description                                               |
 |-----------------------------------------|-----------------------------------------------------------|
-| stage_execution_arn                                    | The execution ARN of the API gateway stage                               |
-| stage_invoke_url                                     |  The invocation URL for the API gateway stage|
-| stage_name                                     |  The name of the stage for API gateway|
 
 
 Development
