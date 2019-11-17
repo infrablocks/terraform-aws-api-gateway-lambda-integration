@@ -62,41 +62,41 @@ EOF
 }
 
 resource "aws_security_group" "sg_lambda" {
-description = "proxy-lambda-${var.deployment_identifier}"
-vpc_id      = var.vpc_id
+  description = "proxy-lambda-${var.deployment_identifier}"
+  vpc_id      = var.vpc_id
 
-ingress {
-from_port   = 0
-to_port     = 0
-protocol    = "-1"
-cidr_blocks = var.lambda_ingress_cidr_blocks
-}
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.lambda_ingress_cidr_blocks
+  }
 
-egress {
-from_port   = 0
-to_port     = 0
-protocol    = "-1"
-cidr_blocks = var.lambda_egress_cidr_blocks
-}
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = var.lambda_egress_cidr_blocks
+  }
 }
 
 resource "aws_lambda_function" "lambda" {
-filename         = var.lambda_zip_path
-function_name    = var.lambda_function_name
-role             = aws_iam_role.proxy_lambda_execution_role.arn
-handler          = var.lambda_handler
-source_code_hash = "${base64sha256(filebase64(var.lambda_zip_path))}"
-runtime          = var.lambda_runtime
-timeout          = var.lambda_timeout
-memory_size      = var.lambda_memory_size
-environment {
-  variables = var.lambda_environment_variables
-}
+  filename         = var.lambda_zip_path
+  function_name    = var.lambda_function_name
+  role             = aws_iam_role.proxy_lambda_execution_role.arn
+  handler          = var.lambda_handler
+  source_code_hash = "${base64sha256(filebase64(var.lambda_zip_path))}"
+  runtime          = var.lambda_runtime
+  timeout          = var.lambda_timeout
+  memory_size      = var.lambda_memory_size
 
-vpc_config {
-  security_group_ids = ["${aws_security_group.sg_lambda.id}"]
-  subnet_ids = var.lambda_subnet_ids
-}
+  environment {
+    variables = var.lambda_environment_variables
+  }
 
+  vpc_config {
+    security_group_ids = ["${aws_security_group.sg_lambda.id}"]
+    subnet_ids = var.lambda_subnet_ids
+  }
 }
 
