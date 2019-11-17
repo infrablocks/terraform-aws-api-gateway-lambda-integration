@@ -1,13 +1,21 @@
+require 'aws-sdk'
 require 'awspec'
+require 'ostruct'
+
 require_relative '../terraform_module'
 
 shared_context :terraform do
   include Awspec::Helper::Finder
 
-  let(:vars) {TerraformModule.configuration.for(:harness).vars}
+  let(:vars) {
+    OpenStruct.new(
+        TerraformModule.configuration
+            .for(:harness)
+            .vars)
+  }
 
-  let(:api_gateway_client) {Aws::ApiGatewayV2::Client.new}
-  let(:api_gateway_apis) {Aws::ApiGatewayV2::Client.new.get_apis}
+  let(:api_gateway_client) { Aws::ApiGatewayV2::Client.new }
+  let(:api_gateway_apis) { Aws::ApiGatewayV2::Client.new.get_apis }
 
   def api_gateway_api_ids()
     client = Aws::APIGateway::Client.new
@@ -31,21 +39,23 @@ shared_context :terraform do
   def api_gateway_integration(api_id, resource_id, http_method)
     client = Aws::APIGateway::Client.new
     client.get_integration({
-                               rest_api_id: api_id,
-                               resource_id: resource_id,
-                               http_method: http_method
-                           })
+        rest_api_id: api_id,
+        resource_id: resource_id,
+        http_method: http_method
+    })
   end
 
+  def configuration
+    TerraformModule.configuration
+  end
 
   def output_for(role, name)
     TerraformModule.output_for(role, name)
   end
 
-  def reprovision(override_vars)
+  def reprovision(overrides = nil)
     TerraformModule.provision_for(
         :harness,
-        TerraformModule.configuration.for(:harness)
-            .vars.to_h.merge(override_vars))
+        TerraformModule.configuration.for(:harness, overrides).vars)
   end
 end
