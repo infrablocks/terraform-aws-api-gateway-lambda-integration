@@ -25,7 +25,7 @@ module "api_gateway_lambda_resource" {
   resource_http_method = "GET"
   resource_path_part = var.resource_path_part
 
-  lambda_subnet_ids = split(",", data.terraform_remote_state.prerequisites.outputs.private_subnet_ids)
+  lambda_subnet_ids = data.terraform_remote_state.prerequisites.outputs.private_subnet_ids
   lambda_zip_path = var.lambda_zip_path
   lambda_ingress_cidr_blocks = var.lambda_ingress_cidr_blocks
   lambda_egress_cidr_blocks = var.lambda_egress_cidr_blocks
