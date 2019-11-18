@@ -6,7 +6,6 @@ data "terraform_remote_state" "prerequisites" {
   }
 }
 
-
 module "api_gateway_lambda_resource" {
   source = "../../../../"
 

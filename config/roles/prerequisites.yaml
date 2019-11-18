@@ -12,8 +12,9 @@ vars:
 
   infrastructure_events_bucket: "%{hiera('infrastructure_events_bucket')}"
 
+  public_zone_id: "%{hiera('public_zone_id')}"
+  private_zone_id: "%{hiera('private_zone_id')}"
   domain_name: "%{hiera('domain_name')}"
   subdomain: "%{hiera('subdomain')}"
-  public_zone_id: "%{hiera('public_zone_id')}"
 
   create_custom_domain: 'no'
