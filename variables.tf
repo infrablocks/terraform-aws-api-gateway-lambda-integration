@@ -62,3 +62,7 @@ variable "lambda_memory_size" {
   default = 128
 }
 
+variable "tags" {
+  default = {}
+}
+
