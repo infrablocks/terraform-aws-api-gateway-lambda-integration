@@ -3,6 +3,7 @@ data "aws_caller_identity" "current" {
 
 resource "aws_iam_role" "proxy_lambda_execution_role" {
   description               = "proxy_lambda_execution_role"
+  tags                      = var.tags
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -100,5 +101,7 @@ resource "aws_lambda_function" "lambda" {
     ]
     subnet_ids = var.lambda_subnet_ids
   }
+
+  tags = var.tags
 }
 
