@@ -43,7 +43,7 @@ resource "aws_iam_role_policy" "proxy_lambda_execution_policy" {
     {
             "Effect": "Allow",
             "Action": "logs:CreateLogGroup",
-            "Resource": "arn:aws:logs:eu-west-1:*:*"
+            "Resource": "arn:aws:logs:${var.region}:*:*"
         },
         {
             "Effect": "Allow",
@@ -52,7 +52,7 @@ resource "aws_iam_role_policy" "proxy_lambda_execution_policy" {
                 "logs:PutLogEvents"
             ],
             "Resource": [
-                "arn:aws:logs:eu-west-1:702464176885:*"
+                "arn:aws:logs:${var.region}:${var.account_id}:*"
             ]
         }
   ]
