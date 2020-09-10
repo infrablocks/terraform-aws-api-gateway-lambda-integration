@@ -37,7 +37,7 @@ variable "lambda_egress_cidr_blocks" {
 }
 
 variable "lambda_environment_variables" {
-  description = "Environment variables to be provied to the lambda function."
+  description = "Environment variables to be provided to the lambda function."
   type = map(string)
 }
 

@@ -2,8 +2,8 @@ data "aws_caller_identity" "current" {
 }
 
 resource "aws_iam_role" "proxy_lambda_execution_role" {
-  description               = "proxy_lambda_execution_role"
-  tags                      = var.tags
+  description = "proxy_lambda_execution_role"
+  tags = var.tags
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -64,32 +64,32 @@ EOF
 
 resource "aws_security_group" "sg_lambda" {
   description = "proxy-lambda-${var.deployment_identifier}"
-  vpc_id      = var.vpc_id
+  vpc_id = var.vpc_id
 
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = var.lambda_ingress_cidr_blocks
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = var.lambda_egress_cidr_blocks
   }
 }
 
 resource "aws_lambda_function" "lambda" {
-  filename         = var.lambda_zip_path
-  function_name    = var.lambda_function_name
-  role             = aws_iam_role.proxy_lambda_execution_role.arn
-  handler          = var.lambda_handler
+  filename = var.lambda_zip_path
+  function_name = var.lambda_function_name
+  role = aws_iam_role.proxy_lambda_execution_role.arn
+  handler = var.lambda_handler
   source_code_hash = base64sha256(filebase64(var.lambda_zip_path))
-  runtime          = var.lambda_runtime
-  timeout          = var.lambda_timeout
-  memory_size      = var.lambda_memory_size
+  runtime = var.lambda_runtime
+  timeout = var.lambda_timeout
+  memory_size = var.lambda_memory_size
 
   environment {
     variables = var.lambda_environment_variables
