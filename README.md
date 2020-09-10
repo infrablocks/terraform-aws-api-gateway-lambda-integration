@@ -81,6 +81,7 @@ module "api_gateway_lambda_resource" {
 | stage_execution_arn                                    | The execution ARN of the API gateway stage                               |
 | stage_invoke_url                                     |  The invocation URL for the API gateway stage|
 | stage_name                                     |  The name of the stage for API gateway|
+| lambda_role_arn                                     |  ARN of the Lambda role|
 
 
 Development
