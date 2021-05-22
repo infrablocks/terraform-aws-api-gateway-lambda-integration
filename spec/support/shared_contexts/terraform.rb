@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'aws-sdk'
 require 'awspec'
 require 'ostruct'
@@ -7,12 +9,13 @@ require_relative '../terraform_module'
 shared_context :terraform do
   include Awspec::Helper::Finder
 
-  let(:vars) {
+  let(:vars) do
     OpenStruct.new(
-        TerraformModule.configuration
-            .for(:harness)
-            .vars)
-  }
+      TerraformModule.configuration
+          .for(:harness)
+          .vars
+    )
+  end
 
   let(:api_gateway_client) { Aws::ApiGatewayV2::Client.new }
   let(:api_gateway_apis) { Aws::ApiGatewayV2::Client.new.get_apis }
@@ -55,7 +58,8 @@ shared_context :terraform do
 
   def reprovision(overrides = nil)
     TerraformModule.provision_for(
-        :harness,
-        TerraformModule.configuration.for(:harness, overrides).vars)
+      :harness,
+      TerraformModule.configuration.for(:harness, overrides).vars
+    )
   end
 end
