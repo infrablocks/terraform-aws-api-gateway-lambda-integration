@@ -10,8 +10,6 @@ module "base_network" {
   deployment_identifier = var.deployment_identifier
 
   private_zone_id = var.private_zone_id
-
-  infrastructure_events_bucket = var.infrastructure_events_bucket
 }
 
 resource "aws_api_gateway_rest_api" "api" {
