@@ -1,4 +1,4 @@
-output "stage_exection_arn" {
+output "stage_execution_arn" {
   value = module.api_gateway_lambda_resource.stage_execution_arn
 }
 
