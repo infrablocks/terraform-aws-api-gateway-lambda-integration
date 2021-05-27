@@ -51,7 +51,7 @@ module "api_gateway_lambda_resource" {
 ```
 
 See the 
-[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/api-gateway/aws/latest) 
+[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/api-gateway-lambda-resource/aws/latest) 
 for more details.
 
 ### Inputs
