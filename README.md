@@ -50,6 +50,9 @@ module "api_gateway_lambda_resource" {
 }
 ```
 
+See the 
+[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/api-gateway/aws/latest) 
+for more details.
 
 ### Inputs
 
@@ -83,14 +86,18 @@ module "api_gateway_lambda_resource" {
 | stage_name                                     |  The name of the stage for API gateway|
 | lambda_role_arn                                     |  ARN of the Lambda role|
 
+### Compatibility
+
+This module is compatible with Terraform versions greater than or equal to 
+Terraform 0.14.
 
 Development
 -----------
 
 ### Machine Requirements
 
-In order for the build to run correctly, a few tools will need to be installed on your
-development machine:
+In order for the build to run correctly, a few tools will need to be installed 
+on your development machine:
 
 * Ruby (2.3.1)
 * Bundler
@@ -207,12 +214,15 @@ openssl aes-256-cbc \
 Contributing
 ------------
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/infrablocks/terraform-aws-network-load-balancer. 
-This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to 
-the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at
+https://github.com/infrablocks/terraform-aws-api-gateway-lambda-resource. 
+This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to the
+[Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 License
 -------
 
-The library is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The library is available as open source under the terms of the 
+[MIT License](http://opensource.org/licenses/MIT).
