@@ -51,7 +51,7 @@ variable "lambda_function_name" {}
 variable "lambda_handler" {}
 
 variable "lambda_runtime" {
-  default = "nodejs10.x"
+  default = "nodejs14.x"
 }
 
 variable "lambda_timeout" {
