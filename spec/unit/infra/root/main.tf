@@ -7,8 +7,7 @@ data "terraform_remote_state" "prerequisites" {
 }
 
 module "api_gateway_lambda_resource" {
-  # This makes absolutely no sense. I think there's a bug in terraform.
-  source = "./../../../../../../../"
+  source = "../../../.."
 
   region = var.region
 
@@ -22,14 +21,19 @@ module "api_gateway_lambda_resource" {
   api_gateway_root_resource_id = data.terraform_remote_state.prerequisites.outputs.api_gateway_root_resource_id
   api_gateway_stage_name = var.api_gateway_stage_name
 
-  resource_http_method = "GET"
+  resource_http_method = var.resource_http_method
   resource_path_part = var.resource_path_part
 
   lambda_subnet_ids = data.terraform_remote_state.prerequisites.outputs.private_subnet_ids
   lambda_zip_path = var.lambda_zip_path
   lambda_ingress_cidr_blocks = var.lambda_ingress_cidr_blocks
   lambda_egress_cidr_blocks = var.lambda_egress_cidr_blocks
-  lambda_environment_variables = var.lambda_environment_variables
   lambda_function_name = var.lambda_function_name
   lambda_handler = var.lambda_handler
+  lambda_runtime = var.lambda_runtime
+  lambda_timeout = var.lambda_timeout
+  lambda_memory_size = var.lambda_memory_size
+  lambda_environment_variables = var.lambda_environment_variables
+
+  tags = var.tags
 }
