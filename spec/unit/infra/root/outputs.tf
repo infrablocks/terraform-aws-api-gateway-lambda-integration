@@ -1,7 +1,3 @@
-output "stage_execution_arn" {
-  value = module.api_gateway_lambda_resource.stage_execution_arn
-}
-
-output "stage_invoke_url" {
-  value = module.api_gateway_lambda_resource.stage_invoke_url
+output "api_gateway_redeployment_triggers" {
+  value = module.api_gateway_lambda_integration.api_gateway_redeployment_triggers
 }

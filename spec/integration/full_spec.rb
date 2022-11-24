@@ -18,35 +18,11 @@ describe 'full' do
     end
   end
 
-  def api_gateway_stages(api_id)
-    client = Aws::APIGateway::Client.new
-    client.get_stages(rest_api_id: api_id)
-  end
-
-  let(:rest_api_id) { output(role: :full, name: 'api_gateway_id') }
+  let(:rest_api_id) { output(role: :full, name: 'api_gateway_rest_api_id') }
 
   describe 'API gateway resource' do
-    subject { api_gateway_resources(rest_api_id, 'resource').first }
+    subject { api_gateway_resources(rest_api_id, '{proxy+}').first }
 
-    its(:path_part) { is_expected.to(eq('resource')) }
-  end
-
-  describe 'lambda' do
-    subject { lambda('test-lambda-resource') }
-
-    it { is_expected.to(exist) }
-
-    it { is_expected.to(have_env_vars(['TEST_ENV_VARIABLE'])) }
-
-    its(:runtime) { is_expected.to(eq('nodejs14.x')) }
-    its(:memory_size) { is_expected.to(eq(128)) }
-    its(:timeout) { is_expected.to(eq(30)) }
-    its(:handler) { is_expected.to(eq('handler.hello')) }
-  end
-
-  describe 'api gateway stage' do
-    subject { api_gateway_stages(rest_api_id).item.first }
-
-    its(:stage_name) { is_expected.to(eq('test')) }
+    its(:path_part) { is_expected.to(eq('{proxy+}')) }
   end
 end

@@ -5,19 +5,3 @@ vars:
   region: "%{hiera('region')}"
   component: "%{hiera('component')}"
   deployment_identifier: "%{hiera('deployment_identifier')}"
-
-  account_id: "%{hiera('account_id')}"
-
-  api_gateway_stage_name: 'test'
-  resource_path_part: 'lambda-resource'
-  resource_http_method: 'GET'
-
-  lambda_zip_path: 'lambda.zip'
-  lambda_function_name: "test-lambda-resource"
-  lambda_handler: "handler.hello"
-  lambda_ingress_cidr_blocks:
-    - "10.0.0.0/8"
-  lambda_egress_cidr_blocks:
-    - "0.0.0.0/0"
-  lambda_environment_variables:
-    TEST_ENV_VARIABLE: 'test-value'
