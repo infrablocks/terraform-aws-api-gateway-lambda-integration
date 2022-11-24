@@ -103,7 +103,8 @@ end
 
 RakeCircleCI.define_project_tasks(
   namespace: :circle_ci,
-  project_slug: 'github/infrablocks/terraform-aws-api-gateway-lambda-integration'
+  project_slug:
+    'github/infrablocks/terraform-aws-api-gateway-lambda-integration'
 ) do |t|
   circle_ci_config =
     YAML.load_file('config/secrets/circle_ci/config.yaml')
