@@ -8,7 +8,7 @@ A Terraform module for integrating a lambda to an existing API gateway in AWS.
 The API gateway requires:
 
 * An existing API gateway
-* An existing lambda
+* An existing lambda function
 
 The API gateway resource consists of:
 
