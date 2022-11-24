@@ -1,19 +1,15 @@
-output "api_gateway_id" {
-  value = aws_api_gateway_rest_api.api.id
+output "api_gateway_rest_api_id" {
+  value = module.api_gateway.api_gateway_rest_api_id
 }
 
-output "stage_execution_arn" {
-  value = module.api_gateway_lambda_resource.stage_execution_arn
+output "api_gateway_rest_api_root_resource_id" {
+  value = module.api_gateway.api_gateway_rest_api_root_resource_id
 }
 
-output "stage_invoke_url" {
-  value = module.api_gateway_lambda_resource.stage_invoke_url
+output "lambda_function_name" {
+  value = module.lambda.lambda_function_name
 }
 
-output "stage_name" {
-  value = module.api_gateway_lambda_resource.stage_name
-}
-
-output "lambda_role_arn" {
-  value = module.api_gateway_lambda_resource.lambda_role_arn
+output "api_gateway_redeployment_triggers" {
+  value = module.api_gateway_lambda_integration.api_gateway_redeployment_triggers
 }
