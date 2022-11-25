@@ -46,22 +46,37 @@ describe 'API gateway integrations' do
         .to(include_resource_creation(type: 'aws_api_gateway_integration')
               .with_attribute_value(:http_method, 'ANY'))
     end
+
+    it 'does not set any passthrough behaviour on the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(:passthrough_behaviour, a_nil_value))
+    end
+
+    it 'does not set any request templates on the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(:request_templates, a_nil_value))
+    end
   end
 
-  describe 'when resource definitions includes single path with multiple ' \
-           'methods' do
+  describe 'when multiple resource definitions provided for the same path' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
             path: 'first',
-            methods: %w[OPTIONS GET]
+            method: 'OPTIONS'
+          },
+          {
+            path: 'first',
+            method: 'GET'
           }
         ]
       end
     end
 
-    it 'creates an integration for each provided method' do
+    it 'creates an integration for each provided definition' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_integration')
               .twice)
@@ -99,41 +114,40 @@ describe 'API gateway integrations' do
     end
   end
 
-  describe 'when resource definitions includes multiple paths with multiple ' \
-           'methods' do
+  describe 'when multiple resource definitions provided for different paths' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
             path: 'first',
-            methods: %w[OPTIONS GET]
+            method: 'OPTIONS'
           },
           {
             path: 'second',
-            methods: %w[ANY]
+            method: 'ANY'
           }
         ]
       end
     end
 
-    it 'creates an integration for each provided method and path' do
+    it 'creates an integration for each provided definition' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_integration')
-              .thrice)
+              .twice)
     end
 
     it 'uses the provided API gateway REST API ID for each integration' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_integration')
               .with_attribute_value(:rest_api_id, api_gateway_rest_api_id)
-              .thrice)
+              .twice)
     end
 
     it 'uses a type of AWS_PROXY for each integration' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_integration')
               .with_attribute_value(:type, 'AWS_PROXY')
-              .thrice)
+              .twice)
     end
 
     it 'uses an integration HTTP method of POST for the integration' do
@@ -142,15 +156,94 @@ describe 'API gateway integrations' do
               .with_attribute_value(
                 :integration_http_method, 'POST'
               )
-              .thrice)
+              .twice)
     end
 
     it 'uses the provided HTTP methods for each integration' do
-      %w[OPTIONS GET ANY].each do |http_method|
+      %w[OPTIONS ANY].each do |http_method|
         expect(@plan)
           .to(include_resource_creation(type: 'aws_api_gateway_integration')
                 .with_attribute_value(:http_method, http_method))
       end
+    end
+  end
+
+  describe 'when use_proxy_integration is true' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.use_proxy_integration = true
+      end
+    end
+
+    it 'uses a type of AWS_PROXY for the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(:type, 'AWS_PROXY'))
+    end
+  end
+
+  describe 'when use_proxy_integration is false' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.use_proxy_integration = false
+      end
+    end
+
+    it 'uses a type of AWS for the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(:type, 'AWS'))
+    end
+  end
+
+  describe 'when a resource definition includes passthrough_behaviour' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.use_proxy_integration = false
+        vars.api_gateway_resource_definitions = [
+          {
+            path: 'first',
+            method: 'OPTIONS',
+            integration_passthrough_behavior: 'NEVER'
+          }
+        ]
+      end
+    end
+
+    it 'sets the passthrough behaviour on the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(
+                :passthrough_behavior, 'NEVER'
+              ))
+    end
+  end
+
+  describe 'when a resource definition includes request_templates' do
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.use_proxy_integration = false
+        vars.api_gateway_resource_definitions = [
+          {
+            path: 'first',
+            method: 'OPTIONS',
+            integration_request_templates: {
+              'application/json': '{ "body": $input.json("$") }'
+            }
+          }
+        ]
+      end
+    end
+
+    it 'sets the request templates on the integration' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(
+                :request_templates,
+                {
+                  'application/json': '{ "body": $input.json("$") }'
+                }
+              ))
     end
   end
 end

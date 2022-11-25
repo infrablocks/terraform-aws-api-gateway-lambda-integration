@@ -21,5 +21,7 @@ module "api_gateway_lambda_integration" {
 
   lambda_function_name = data.terraform_remote_state.prerequisites.outputs.lambda_function_name
 
+  use_proxy_integration = var.use_proxy_integration
+
   tags = var.tags
 }

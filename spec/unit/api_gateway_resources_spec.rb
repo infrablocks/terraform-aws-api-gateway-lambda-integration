@@ -57,11 +57,15 @@ describe 'API gateway resources' do
         vars.api_gateway_resource_definitions = [
           {
             path: 'first',
-            methods: %w[OPTIONS GET]
+            method: 'OPTIONS'
+          },
+          {
+            path: 'first',
+            method: 'GET'
           },
           {
             path: 'second',
-            methods: ['ANY']
+            method: 'ANY'
           }
         ]
       end

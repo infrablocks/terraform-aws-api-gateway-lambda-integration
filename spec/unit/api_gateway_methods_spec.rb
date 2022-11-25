@@ -40,20 +40,23 @@ describe 'API gateway methods' do
     end
   end
 
-  describe 'when resource definitions includes single path with multiple ' \
-           'methods' do
+  describe 'when multiple resource definitions provided for the same path' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
             path: 'first',
-            methods: %w[OPTIONS GET]
+            method: 'OPTIONS'
+          },
+          {
+            path: 'first',
+            method: 'GET'
           }
         ]
       end
     end
 
-    it 'creates a method for each provided method' do
+    it 'creates a method for each provided definition' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_method')
               .twice)
@@ -82,45 +85,44 @@ describe 'API gateway methods' do
     end
   end
 
-  describe 'when resource definitions includes multiple paths with multiple ' \
-           'methods' do
+  describe 'when multiple resource definitions provided for different paths' do
     before(:context) do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
             path: 'first',
-            methods: %w[OPTIONS GET]
+            method: 'GET'
           },
           {
             path: 'second',
-            methods: %w[ANY]
+            method: 'ANY'
           }
         ]
       end
     end
 
-    it 'creates a method for each provided method' do
+    it 'creates a method for each provided definition' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_method')
-              .thrice)
+              .twice)
     end
 
     it 'uses the provided API gateway ID for the methods' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_method')
               .with_attribute_value(:rest_api_id, api_gateway_rest_api_id)
-              .thrice)
+              .twice)
     end
 
     it 'uses an authorization of "NONE" for the methods' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_api_gateway_method')
               .with_attribute_value(:authorization, 'NONE')
-              .thrice)
+              .twice)
     end
 
     it 'uses the provided HTTP methods for the methods' do
-      %w[OPTIONS GET ANY].each do |http_method|
+      %w[GET ANY].each do |http_method|
         expect(@plan)
           .to(include_resource_creation(type: 'aws_api_gateway_method')
                 .with_attribute_value(:http_method, http_method))

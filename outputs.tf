@@ -1,7 +1,7 @@
 locals {
   redeployment_triggers = merge(
     {
-      for path, definition in local.resource_definitions:
+      for path in local.resource_definitions:
         "resource-${path}" => aws_api_gateway_resource.resource[path].id
     },
     {

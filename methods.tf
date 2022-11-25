@@ -1,13 +1,8 @@
 locals {
-  method_definitions = merge([
-    for definition in var.api_gateway_resource_definitions: {
-      for method in definition.methods:
-        "${definition.path}-${method}" => {
-          path: definition.path,
-          method: method
-        }
-    }
-  ]...)
+  method_definitions = {
+    for definition in var.api_gateway_resource_definitions :
+      "${definition.path}-${definition.method}" => definition
+  }
 }
 
 resource "aws_api_gateway_method" "method" {

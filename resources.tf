@@ -1,8 +1,8 @@
 locals {
-  resource_definitions = {
+  resource_definitions = toset(distinct([
     for definition in var.api_gateway_resource_definitions:
-      definition.path => definition
-  }
+      definition.path
+  ]))
 }
 
 resource "aws_api_gateway_resource" "resource" {

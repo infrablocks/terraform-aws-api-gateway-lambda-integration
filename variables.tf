@@ -17,14 +17,23 @@ variable "api_gateway_rest_api_root_resource_id" {
 variable "api_gateway_resource_definitions" {
   type = list(object({
     path: string,
-    methods: list(string)
+    method: string,
+    integration_passthrough_behavior: optional(string)
+    integration_request_templates: optional(map(string))
   }))
   default = [
     {
       path: "{proxy+}",
-      methods: ["ANY"]
+      method: "ANY"
     }
   ]
+  nullable = false
+}
+
+variable "use_proxy_integration" {
+  description = "Whether to use a proxy integration (`true`, \"AWS_PROXY\") or a custom integration (`false`, \"AWS\"). Defaults to `true`."
+  type = bool
+  default = true
   nullable = false
 }
 

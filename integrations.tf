@@ -1,13 +1,8 @@
 locals {
-  integration_definitions = merge([
-    for definition in var.api_gateway_resource_definitions: {
-      for method in definition.methods:
-        "${definition.path}-${method}" => {
-          path: definition.path,
-          method: method
-        }
-    }
-  ]...)
+  integration_definitions = {
+    for definition in var.api_gateway_resource_definitions:
+        "${definition.path}-${definition.method}" => definition
+  }
 }
 
 data "aws_lambda_function" "lambda" {
@@ -22,7 +17,11 @@ resource "aws_api_gateway_integration" "integration" {
   http_method = aws_api_gateway_method.method[each.key].http_method
 
   integration_http_method = "POST"
-  type                    = "AWS_PROXY"
+
+  type = var.use_proxy_integration ? "AWS_PROXY" : "AWS"
+
+  passthrough_behavior = try(each.value.integration_passthrough_behavior, null)
+  request_templates = try(each.value.integration_request_templates, null)
 
   uri = data.aws_lambda_function.lambda.invoke_arn
 }
