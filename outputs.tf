@@ -2,15 +2,15 @@ locals {
   redeployment_triggers = merge(
     {
       for path in local.resource_definitions:
-        "resource-${path}" => aws_api_gateway_resource.resource[path].id
+        "resource-${path}" => sha256(jsonencode(aws_api_gateway_resource.resource[path]))
     },
     {
       for key, definition in local.method_definitions:
-        "method-${key}" => aws_api_gateway_method.method[key].id
+        "method-${key}" => sha256(jsonencode(aws_api_gateway_method.method[key]))
     },
     {
       for key, definition in local.integration_definitions:
-        "integration-${key}" => aws_api_gateway_integration.integration[key].id
+        "integration-${key}" => sha256(jsonencode(aws_api_gateway_integration.integration[key]))
     }
   )
 }
