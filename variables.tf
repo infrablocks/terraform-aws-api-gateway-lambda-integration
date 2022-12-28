@@ -1,20 +1,27 @@
 variable "region" {
-  description = "AWS region"
+  description = "The region into which to deploy the API Gateway Lambda integration."
 }
 
-variable "component" {}
-variable "deployment_identifier" {}
+variable "component" {
+  description = "The component for which the API Gateway Lambda integration is being managed."
+}
+variable "deployment_identifier" {
+  description = "An identifier for this instantiation."
+}
 
-variable "lambda_function_name" {}
+variable "lambda_function_name" {
+  description = "The name of the Lambda function to integrate from the API Gateway REST API."
+}
 
 variable "api_gateway_rest_api_id" {
-  description = "The ID of the API gateway REST API for which this deployment is being managed."
+  description = "The ID of the API gateway REST API for which this Lambda integration is being managed."
 }
 variable "api_gateway_rest_api_root_resource_id" {
-  description = "The resource ID of the REST API's root"
+  description = "The ID of the API Gateway REST API's root resource."
 }
 
 variable "api_gateway_resource_definitions" {
+  description = "Definitions of the resources to manage on the API Gateway REST API for the Lambda."
   type = list(object({
     path: string,
     method: string,
@@ -38,5 +45,6 @@ variable "use_proxy_integration" {
 }
 
 variable "tags" {
+  description = "A map of tags to add to created infrastructure components."
   default = {}
 }

@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 2.0.0 (December 28th, 2022)
+
 BACKWARDS INCOMPATIBILITIES / NOTES:
 
 * This module's name has changed from 

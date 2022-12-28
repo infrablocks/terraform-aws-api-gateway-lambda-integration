@@ -16,5 +16,6 @@ locals {
 }
 
 output "api_gateway_redeployment_triggers" {
+  description = "A map of data which upon change should trigger a redeployment of the stage."
   value = local.redeployment_triggers
 }
