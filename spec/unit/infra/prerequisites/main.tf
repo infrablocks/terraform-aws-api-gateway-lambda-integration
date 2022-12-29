@@ -1,6 +1,6 @@
 module "api_gateway" {
   source  = "infrablocks/api-gateway/aws"
-  version = "2.0.0-rc.2"
+  version = "2.0.0"
 
   region = var.region
 
