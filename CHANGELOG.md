@@ -1,5 +1,18 @@
 ## Unreleased
 
+IMPROVEMENTS:
+
+* By default, the integration now creates an ANY method for the root resource 
+  in addition to the proxy resource and corresponding ANY method so that all
+  requests are proxied to the lambda.
+
+BACKWARDS INCOMPATIBILITIES / NOTES:
+
+* In order to allow root resource methods to be configured as well as to pave
+  the way for nested resources to be defined, the `path` attribute of the
+  `api_gateway_resource_definitions` var now expects paths to be prefixed with
+  `/`.
+
 ## 2.0.0 (December 28th, 2022)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:

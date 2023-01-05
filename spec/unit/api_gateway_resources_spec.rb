@@ -56,15 +56,15 @@ describe 'API gateway resources' do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
-            path: 'first',
+            path: '/first',
             method: 'OPTIONS'
           },
           {
-            path: 'first',
+            path: '/first',
             method: 'GET'
           },
           {
-            path: 'second',
+            path: '/second',
             method: 'ANY'
           }
         ]

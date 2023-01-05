@@ -14,18 +14,27 @@ describe 'full' do
     )
   end
 
-  def api_gateway_resources(api_id, path_part)
-    client = Aws::APIGateway::Client.new
-    client.get_resources(rest_api_id: api_id).items.select do |resource|
-      resource.path_part = path_part
-    end
-  end
-
   let(:rest_api_id) { output(role: :full, name: 'api_gateway_rest_api_id') }
 
-  describe 'API gateway resource' do
-    subject { api_gateway_resources(rest_api_id, '{proxy+}').first }
+  describe 'API gateway resources' do
+    subject(:resources) do
+      client = Aws::APIGateway::Client.new
+      client.get_resources(rest_api_id: rest_api_id).items
+    end
 
-    its(:path_part) { is_expected.to(eq('{proxy+}')) }
+    let(:root_resource) { resources.find { |r| r.path = '/' } }
+    let(:proxy_resource) { resources.find { |r| r.path = '/{proxy+}' } }
+
+    it 'creates a {proxy+} resource' do
+      expect(proxy_resource).not_to(be_nil)
+    end
+
+    it 'creates an ANY method on the {proxy+} resource' do
+      expect(proxy_resource.resource_methods["ANY"]).not_to(be_nil)
+    end
+
+    it 'creates an ANY method on the root resource' do
+      expect(root_resource.resource_methods["ANY"]).not_to(be_nil)
+    end
   end
 end

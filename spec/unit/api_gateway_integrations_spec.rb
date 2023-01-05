@@ -65,11 +65,11 @@ describe 'API gateway integrations' do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
-            path: 'first',
+            path: '/first',
             method: 'OPTIONS'
           },
           {
-            path: 'first',
+            path: '/first',
             method: 'GET'
           }
         ]
@@ -119,11 +119,11 @@ describe 'API gateway integrations' do
       @plan = plan(role: :root) do |vars|
         vars.api_gateway_resource_definitions = [
           {
-            path: 'first',
+            path: '/first',
             method: 'OPTIONS'
           },
           {
-            path: 'second',
+            path: '/second',
             method: 'ANY'
           }
         ]
@@ -225,7 +225,7 @@ describe 'API gateway integrations' do
         vars.use_proxy_integration = false
         vars.api_gateway_resource_definitions = [
           {
-            path: 'first',
+            path: '/first',
             method: 'OPTIONS',
             integration_request_templates: {
               'application/json': '{ "body": $input.json("$") }'

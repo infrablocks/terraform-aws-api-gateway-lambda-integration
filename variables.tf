@@ -30,7 +30,11 @@ variable "api_gateway_resource_definitions" {
   }))
   default = [
     {
-      path: "{proxy+}",
+      path: "/",
+      method: "ANY"
+    },
+    {
+      path: "/{proxy+}",
       method: "ANY"
     }
   ]
