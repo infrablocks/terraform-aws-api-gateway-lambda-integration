@@ -19,7 +19,7 @@ describe 'full' do
   describe 'API gateway resources' do
     subject(:resources) do
       client = Aws::APIGateway::Client.new
-      client.get_resources(rest_api_id: rest_api_id).items
+      client.get_resources(rest_api_id:).items
     end
 
     let(:root_resource) { resources.find { |r| r.path = '/' } }
@@ -30,11 +30,11 @@ describe 'full' do
     end
 
     it 'creates an ANY method on the {proxy+} resource' do
-      expect(proxy_resource.resource_methods["ANY"]).not_to(be_nil)
+      expect(proxy_resource.resource_methods['ANY']).not_to(be_nil)
     end
 
     it 'creates an ANY method on the root resource' do
-      expect(root_resource.resource_methods["ANY"]).not_to(be_nil)
+      expect(root_resource.resource_methods['ANY']).not_to(be_nil)
     end
   end
 end
