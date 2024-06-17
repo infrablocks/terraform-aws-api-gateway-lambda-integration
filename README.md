@@ -64,6 +64,7 @@ for more details.
 | `api_gateway_resource_definitions`      | Definitions of the resources to manage on the API Gateway REST API for the Lambda.                     | `[ { path: "{proxy+}", method: "ANY" } ]` |    No    |
 | `use_proxy_integration`                 | Whether to use a proxy integration (`true`, `"AWS_PROXY"`) or a custom integration (`false`, `"AWS"`). |                  `true`                   |    No    |
 | `tags`                                  | A map of tags to add to created infrastructure components.                                             |                   `{}`                    |    No    |
+| `timeout_milliseconds`                  | Custom timeout. The default value is 29,000 milliseconds.                                              |                     -                     |    No    |
 
 ### Outputs
 

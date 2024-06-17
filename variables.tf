@@ -52,3 +52,7 @@ variable "tags" {
   description = "A map of tags to add to created infrastructure components."
   default = {}
 }
+
+variable "timeout_milliseconds" {
+  type = number
+}

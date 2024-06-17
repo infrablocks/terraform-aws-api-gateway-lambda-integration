@@ -24,4 +24,6 @@ resource "aws_api_gateway_integration" "integration" {
   request_templates = try(each.value.integration_request_templates, null)
 
   uri = data.aws_lambda_function.lambda.invoke_arn
+
+  timeout_milliseconds = var.timeout_milliseconds
 }

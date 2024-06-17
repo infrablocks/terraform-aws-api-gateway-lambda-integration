@@ -246,4 +246,24 @@ describe 'API gateway integrations' do
               ))
     end
   end
+
+  describe 'when timeout_milliseconds is provided' do
+    timeout_milliseconds = 25000
+
+    before(:context) do
+      @plan = plan(role: :root) do |vars|
+        vars.use_proxy_integration = false
+        vars.timeout_milliseconds = timeout_milliseconds
+      end
+    end
+
+    it 'uses the provided timeout' do
+      expect(@plan)
+        .to(include_resource_creation(type: 'aws_api_gateway_integration')
+              .with_attribute_value(
+                :timeout_milliseconds,
+                timeout_milliseconds
+              ))
+    end
+  end
 end

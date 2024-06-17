@@ -24,4 +24,6 @@ module "api_gateway_lambda_integration" {
   use_proxy_integration = var.use_proxy_integration
 
   tags = var.tags
+
+  timeout_milliseconds = var.timeout_milliseconds
 }
