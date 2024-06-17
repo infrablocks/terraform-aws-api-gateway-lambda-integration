@@ -248,7 +248,7 @@ describe 'API gateway integrations' do
   end
 
   describe 'when timeout_milliseconds is provided' do
-    timeout_milliseconds = 25000
+    timeout_milliseconds = 25_000
 
     before(:context) do
       @plan = plan(role: :root) do |vars|
