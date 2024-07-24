@@ -11,6 +11,8 @@ module "api_gateway_lambda_integration" {
 
   lambda_function_name = module.lambda.lambda_function_name
 
+  timeout_milliseconds = 5000
+
   depends_on = [
     module.api_gateway,
     module.lambda
